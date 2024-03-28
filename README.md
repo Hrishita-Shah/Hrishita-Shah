@@ -4,9 +4,9 @@
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=hrishita-shah&label=Profile%20views&color=0e75b6&style=flat" alt="hrishita-shah" /> </p>
 
-- 🔭 I’m currently working on **Web Apps using MERN**
+- 🔭 I’m currently working on **Web Apps**
 
-- 🌱 I’m currently learning **NodeJS, React JS**
+- 🌱 I’m currently learning **NodeJS, React JS, Next JS, Nest JS**
 
 - 📫 How to reach me **hrishita.shah1393@gmail.com**
 
