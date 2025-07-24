@@ -85,8 +85,16 @@
 
 📊 **GitHub Stats:**
 
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=hrishita-shah&show_icons=true&locale=en&layout=compact" alt="hrishita-shah" /></p>
-
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=hrishita-shah&show_icons=true&locale=en" alt="hrishita-shah" /></p>
+<p>
+  <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight" alt="Top Languages" />
+</p>
+<p>
+  <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&locale=en&theme=tokyonight&include_all_commits=true&count_private=true" alt="Hrishita's GitHub Stats" />
+</p>
 
 <p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=hrishita-shah&" alt="hrishita-shah" /></p>
+
+
+
+
+
