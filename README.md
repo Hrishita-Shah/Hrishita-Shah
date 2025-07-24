@@ -91,4 +91,5 @@
 <p>
   <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&locale=en&theme=tokyonight&include_all_commits=true&count_private=true" alt="Hrishita's GitHub Stats" />
 </p>
-![GitHub Streak](https://streak-stats.demolab.com?user=Hrishita-Shah&theme=tokyonight&hide_border=true)
+
+<p><img align="left" src="https://streak-stats.demolab.com?user=Hrishita-Shah&theme=tokyonight&include_all_commits=true&count_private=true" alt="GitHub Streak" /></p>
