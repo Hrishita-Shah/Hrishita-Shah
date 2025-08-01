@@ -1,1 +1,49 @@
+# .github/workflows/update-stats.yml
+name: Update GitHub Stats
 
+on:
+  schedule:
+    # Runs every day at 00:00 UTC (adjust as needed)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual trigger
+  push:
+    branches: [ main ] # Runs on push to main branch
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Generate GitHub Stats
+      uses: teoxoy/profile-readme-stats@v1
+      with:
+        token: ${{ secrets.GH_TOKEN }}
+        
+    - name: Update README with stats
+      run: |
+        # Create a temporary file with updated stats
+        cat > temp_stats.md << 'EOF'
+        📊 **GitHub Stats:**
+        <p>
+          <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight&count_private=true" alt="Top Languages" />
+        </p>
+        <p>
+          <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true" alt="Hrishita's GitHub Stats" />
+        </p>
+        <div align="center">
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=tokyonight&count_private=true&token=${{ secrets.PERSONAL_ACCESS_TOKEN }}" alt="GitHub Streak" />
+        </div>
+        EOF
+        
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git diff --staged --quiet || git commit -m "Update GitHub stats [skip ci]"
+        git push
