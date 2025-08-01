@@ -87,9 +87,10 @@
 
 📊 **GitHub Stats:**
 
+<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Hrishita-Shah&theme=tokyonight&v=2" />
+
 
 <!-- GitHub Profile Summary Cards -->
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Hrishita-Shah&theme=tokyonight" />
 <p>
   <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight" alt="Top Languages" />
 </p>
