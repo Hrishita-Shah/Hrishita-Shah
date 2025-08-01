@@ -3,8 +3,7 @@ name: Update GitHub Stats
 
 on:
   schedule:
-    # Runs every day at 00:00 UTC (adjust as needed)
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
   workflow_dispatch: # Allows manual trigger
   push:
     branches: [ main ] # Runs on push to main branch
@@ -17,33 +16,53 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
-    - name: Generate GitHub Stats
-      uses: teoxoy/profile-readme-stats@v1
-      with:
         token: ${{ secrets.GH_TOKEN }}
         
-    - name: Update README with stats
+    - name: Update README with GitHub Stats
       run: |
-        # Create a temporary file with updated stats
-        cat > temp_stats.md << 'EOF'
-        📊 **GitHub Stats:**
-        <p>
-          <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight&count_private=true" alt="Top Languages" />
-        </p>
-        <p>
-          <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true" alt="Hrishita's GitHub Stats" />
-        </p>
-        <div align="center">
-          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=tokyonight&count_private=true&token=${{ secrets.GH_TOKEN}}" alt="GitHub Streak" />
-        </div>
-        EOF
+        echo "🔄 Updating GitHub stats..."
         
-    - name: Commit and push if changed
+        # Check if markers exist
+        if ! grep -q "<!-- GITHUB-STATS:START -->" README.md; then
+          echo "❌ Error: Please add <!-- GITHUB-STATS:START --> and <!-- GITHUB-STATS:END --> markers around your stats section in README.md"
+          exit 1
+        fi
+        
+        # Create backup
+        cp README.md README.md.backup
+        
+        # Update stats section between markers
+        sed -i '/<!-- GITHUB-STATS:START -->/,/<!-- GITHUB-STATS:END -->/c\
+<!-- GITHUB-STATS:START -->\
+📊 **GitHub Stats:**\
+<p>\
+  <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight&count_private=true&token=${{ secrets.GH_TOKEN }}" alt="Top Languages" />\
+</p>\
+<p>\
+  <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true&token=${{ secrets.GH_TOKEN }}" alt="Hrishitas GitHub Stats" />\
+</p>\
+<div align="center">\
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=tokyonight&count_private=true" alt="GitHub Streak" />\
+</div>\
+<!-- GITHUB-STATS:END -->' README.md
+        
+        echo "✅ Stats section updated successfully"
+        
+    - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add -A
-        git diff --staged --quiet || git commit -m "Update GitHub stats [skip ci]"
-        git push
+        
+        # Check if there are changes
+        if git diff --quiet README.md; then
+          echo "📊 No changes detected in README.md"
+        else
+          echo "📝 Changes detected, committing..."
+          git add README.md
+          git commit -m "🔄 Update GitHub stats with private contributions [skip ci]"
+          git push
+          echo "✅ README.md updated and pushed successfully!"
+        fi
+        
+        # Clean up backup
+        rm -f README.md.backup
