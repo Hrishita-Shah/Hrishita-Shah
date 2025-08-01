@@ -1,12 +1,12 @@
 # .github/workflows/update-readme-stats.yml
-name: Update GitHub Stats
+name: Update GitHub Stats (Secure)
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at 00:00 UTC
-  workflow_dispatch: # Allows manual trigger
+    - cron: '0 0 * * *'
+  workflow_dispatch:
   push:
-    branches: [ main ] # Runs on push to main branch
+    branches: [ main ]
 
 jobs:
   update-stats:
@@ -16,38 +16,48 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        # Use built-in token (repository-scoped, safer)
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Enable private contributions in profile
+      run: |
+        echo "💡 To show private contributions:"
+        echo "1. Go to your GitHub profile settings"
+        echo "2. Check 'Private contributions' option"
+        echo "3. This shows private activity in your contribution graph"
         
     - name: Update README with GitHub Stats
       run: |
-        echo "🔄 Updating GitHub stats..."
+        echo "🔄 Updating GitHub stats (public repos only for security)..."
         
         # Check if markers exist
         if ! grep -q "<!-- GITHUB-STATS:START -->" README.md; then
-          echo "❌ Error: Please add <!-- GITHUB-STATS:START --> and <!-- GITHUB-STATS:END --> markers around your stats section in README.md"
+          echo "❌ Error: Please add <!-- GITHUB-STATS:START --> and <!-- GITHUB-STATS:END --> markers"
           exit 1
         fi
         
         # Create backup
         cp README.md README.md.backup
         
-        # Create the new stats content in a temporary file
+        # Create secure stats content (no tokens in URLs)
         cat > new_stats.txt << 'EOF'
         <!-- GITHUB-STATS:START -->
         📊 **GitHub Stats:**
         <p>
-          <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight&count_private=true&token=${{ secrets.GH_TOKEN }}" alt="Top Languages" />
+          <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight" alt="Top Languages" />
         </p>
         <p>
-          <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true&token=${{ secrets.GH_TOKEN }}" alt="Hrishitas GitHub Stats" />
+          <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&include_all_commits=true" alt="Hrishitas GitHub Stats" />
         </p>
         <div align="center">
-          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=tokyonight&count_private=true" alt="GitHub Streak" />
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=tokyonight" alt="GitHub Streak" />
         </div>
+        
+        > 💡 **Note**: Enable "Private contributions" in your GitHub profile settings to show private repository activity in your contribution graph.
         <!-- GITHUB-STATS:END -->
         EOF
         
-        # Use awk to replace content between markers
+        # Replace content between markers
         awk '
         /<!-- GITHUB-STATS:START -->/ {
           print
@@ -63,29 +73,24 @@ jobs:
         !skip { print }
         ' README.md > README_temp.md
         
-        # Replace original with updated version
         mv README_temp.md README.md
-        
-        # Clean up temporary file
         rm -f new_stats.txt
         
-        echo "✅ Stats section updated successfully"
+        echo "✅ Stats updated securely (no tokens exposed)"
         
     - name: Commit and push changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         
-        # Check if there are changes
         if git diff --quiet README.md; then
-          echo "📊 No changes detected in README.md"
+          echo "📊 No changes detected"
         else
-          echo "📝 Changes detected, committing..."
+          echo "📝 Committing changes..."
           git add README.md
-          git commit -m "🔄 Update GitHub stats with private contributions [skip ci]"
+          git commit -m "🔄 Update GitHub stats [skip ci]"
           git push
-          echo "✅ README.md updated and pushed successfully!"
+          echo "✅ Updated successfully!"
         fi
         
-        # Clean up backup
         rm -f README.md.backup
