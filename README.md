@@ -103,3 +103,5 @@
 </p>
 
 <!-- GITHUB-STATS:END -->
+> 💡 **Note**: Stats above show public repositories only. 
+> Private repository contributions are visible in the contribution graph when "Private contributions" is enabled in profile settings.
