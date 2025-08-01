@@ -89,7 +89,12 @@
   <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight" alt="Top Languages" />
 </p>
 <p>
-  <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&locale=en&theme=tokyonight&include_all_commits=true&count_private=true" alt="Hrishita's GitHub Stats" />
+  <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true" alt="Hrishita's GitHub Stats" />
 </p>
 
-<p><img align="left" src="https://streak-stats.demolab.com?user=Hrishita-Shah&theme=tokyonight&include_all_commits=true&count_private=true" alt="GitHub Streak" /></p>
+<p><img align="left" src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah" alt="GitHub Streak" /></p>
+
+<div align="center">
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=dark" alt="GitHub Streak" />
+</div>
+
