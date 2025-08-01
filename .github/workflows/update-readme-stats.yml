@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub Stats
-        uses: anuraghazra/github-readme-stats@v1
+        uses: anuraghazra/github-readme-stats@master
         with:
           username: Hrishita-Shah
           token: ${{ secrets.GH_TOKEN }}
@@ -22,7 +22,7 @@ jobs:
           show_total_commits: true
 
       - name: Update README
-        uses: actions-cool/github-profile-readme-action@v1
+        uses: actions-cool/github-profile-readme-action@v2
         with:
           readme_path: ./README.md
           content: |
