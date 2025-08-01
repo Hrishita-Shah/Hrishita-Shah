@@ -1,4 +1,4 @@
-# .github/workflows/update-stats.yml
+# .github/workflows/update-readme-stats.yml
 name: Update GitHub Stats
 
 on:
@@ -31,20 +31,43 @@ jobs:
         # Create backup
         cp README.md README.md.backup
         
-        # Update stats section between markers
-        sed -i '/<!-- GITHUB-STATS:START -->/,/<!-- GITHUB-STATS:END -->/c\
-<!-- GITHUB-STATS:START -->\
-📊 **GitHub Stats:**\
-<p>\
-  <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight&count_private=true&token=${{ secrets.GH_TOKEN }}" alt="Top Languages" />\
-</p>\
-<p>\
-  <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true&token=${{ secrets.GH_TOKEN }}" alt="Hrishitas GitHub Stats" />\
-</p>\
-<div align="center">\
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=tokyonight&count_private=true" alt="GitHub Streak" />\
-</div>\
-<!-- GITHUB-STATS:END -->' README.md
+        # Create the new stats content in a temporary file
+        cat > new_stats.txt << 'EOF'
+        <!-- GITHUB-STATS:START -->
+        📊 **GitHub Stats:**
+        <p>
+          <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=Hrishita-Shah&show_icons=true&locale=en&layout=compact&theme=tokyonight&count_private=true&token=${{ secrets.GH_TOKEN }}" alt="Top Languages" />
+        </p>
+        <p>
+          <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true&token=${{ secrets.GH_TOKEN }}" alt="Hrishitas GitHub Stats" />
+        </p>
+        <div align="center">
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=tokyonight&count_private=true" alt="GitHub Streak" />
+        </div>
+        <!-- GITHUB-STATS:END -->
+        EOF
+        
+        # Use awk to replace content between markers
+        awk '
+        /<!-- GITHUB-STATS:START -->/ {
+          print
+          system("cat new_stats.txt | tail -n +2 | head -n -1")
+          skip = 1
+          next
+        }
+        /<!-- GITHUB-STATS:END -->/ {
+          skip = 0
+          print
+          next
+        }
+        !skip { print }
+        ' README.md > README_temp.md
+        
+        # Replace original with updated version
+        mv README_temp.md README.md
+        
+        # Clean up temporary file
+        rm -f new_stats.txt
         
         echo "✅ Stats section updated successfully"
         
