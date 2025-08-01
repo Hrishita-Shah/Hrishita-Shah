@@ -92,9 +92,7 @@
   <img align="centre" src="https://github-readme-stats.vercel.app/api?username=Hrishita-Shah&show_icons=true&theme=tokyonight&count_private=true&include_all_commits=true" alt="Hrishita's GitHub Stats" />
 </p>
 
-<p><img align="left" src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah" alt="GitHub Streak" /></p>
-
-<div align="center">
+<div align="left">
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=dark" alt="GitHub Streak" />
 </div>
 
