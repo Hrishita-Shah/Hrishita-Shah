@@ -83,6 +83,8 @@
   </a> 
 </p>
 
+<!-- GITHUB-STATS:START -->
+
 📊 **GitHub Stats:**
 
 <p>
@@ -96,3 +98,4 @@
   <img src="https://github-readme-streak-stats.herokuapp.com/?user=Hrishita-Shah&theme=dark" alt="GitHub Streak" />
 </div>
 
+<!-- GITHUB-STATS:END -->
